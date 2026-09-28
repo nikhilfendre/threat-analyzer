@@ -1,0 +1,39 @@
+INCIDENT REPORT IR-2026-0417 — Ransomware Outbreak at ExampleCorp
+
+On March 12, 2026, the security operations center detected ransomware
+activity across the ExampleCorp enterprise network. Initial investigation
+shows the attackers gained initial access through a phishing email
+containing a malicious Excel attachment. A finance department employee
+opened the attachment and enabled macros, which executed a PowerShell
+payload and downloaded the Emotet loader.
+
+The malware exploited the unpatched vulnerability CVE-2023-28252 in
+Windows Server 2019 to escalate privileges, then used Mimikatz to perform
+credential dumping from LSASS memory. With stolen domain administrator
+credentials, the attackers moved laterally via SMB and PsExec to more than
+40 workstations.
+
+On March 13, the Ryuk ransomware payload was deployed. Files were
+encrypted with the .RYK extension and a ransom note named
+RyukReadMe.txt was dropped on every host. The attackers also deleted
+backups using vssadmin and disabled system recovery to inhibit recovery.
+This is a classic double extortion tactic: before encrypting, the group
+exfiltrated approximately 200 GB of sensitive data to their infrastructure.
+
+Command and control communication was observed with the malicious domains
+secure-update-center[.]com and cdn-microsoft-telemetry[.]net, resolving to
+185.220.101.47 and 45.155.204.9. The ransomware binary hash is
+44d88612fea8a8f36de82e1278abb02f44d88612fea8a8f36de82e1278abb02f
+and the loader DLL is 5d41402abc4b2a76b9719d911017c592.
+
+A second vulnerability, CVE-2024-21413 in Microsoft Outlook, was also
+present on several hosts and may have been exploited for initial access
+in a parallel intrusion attempt.
+
+Impact: data encryption across file servers, information theft of customer
+records, and complete shutdown of the ERP system for 72 hours. The
+affected products include Windows Server 2019, Microsoft Outlook, and
+Active Directory.
+
+ExampleCorp has isolated the affected network segments and is restoring
+from offline backups. Law enforcement has been notified.

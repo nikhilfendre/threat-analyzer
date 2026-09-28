@@ -1,0 +1,30 @@
+THREAT ADVISORY TA-2026-0091 — Credential Phishing Campaign
+
+Between April 2 and April 5, 2026, a spearphishing campaign targeted
+employees of multiple logistics companies. The attackers sent spoofed
+emails impersonating the IT helpdesk, warning recipients that their
+password would expire within 24 hours.
+
+Each email contained a link to http://login-portal-verify[.]tk/reset,
+a credential harvesting page mimicking the corporate single sign-on.
+Victims who entered their usernames and passwords had their credentials
+stolen immediately. In at least twelve cases the attackers then used the
+compromised credentials to log in to the VPN and conduct internal
+reconnaissance.
+
+The phishing kit also attempted to harvest multi-factor authentication
+tokens by proxying the real login page in real time. The campaign
+infrastructure reused the domain mail-auth-service[.]xyz, previously
+seen in a 2025 phishing wave, hosted at 91.203.67.114.
+
+The attached HTML file invoice-april.html (md5:
+d41d8cd98f00b204e9800998ecf8427e) contained JavaScript that redirected
+users to the harvesting page when opened in a browser.
+
+No malware was deployed and no data encryption occurred. The primary
+impact is credential theft affecting roughly 60 user accounts. The SOC
+recommends forcing password resets and enforcing MFA for all remote
+access.
+
+Indicators observed: the sender address support@helpdesk-update[.]com,
+the harvesting URL above, and the HTML attachment hash.
